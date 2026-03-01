@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<style>
+  body {
+    background: url("{% static 'images/pink.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+  .register-box {
+    background-color: rgba(44, 46, 74, 0.95);
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+  .register-box h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+  .register-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+  }
+  .register-box .btn-register {
+    width: 100%;
+    background-color: #4caf50;
+    border: none;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+  .register-box .btn-register:hover {
+    background-color: #45a049;
+  }
+  .register-box .small-text {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="register-box">
+  <h3>Registration Form</h3>
+  <form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      <input 
+        type="{{ field.field.widget.input_type }}" 
+        name="{{ field.name }}" 
+        placeholder="{{ field.label }}" 
+        value="{{ field.value|default:'' }}"
+        required
+      />
+      {% if field.errors %}
+        <small class="text-danger">{{ field.errors.0 }}</small>
+      {% endif %}
+    {% endfor %}
+
+    <button type="submit" class="btn-register">Register</button>
+
+    <div class="small-text text-center mt-3">
+      Already have an account? <a href="{% url 'sign_in' %}" style="color:#03a9f4;">Login here</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

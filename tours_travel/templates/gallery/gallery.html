@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🖼 Package-wise Gallery</h2>
+
+  {% for package in packages %}
+    <div class="mb-5">
+      <h4>{{ package.name }}</h4>
+      {% if package.image %}
+        <img src="{{ package.image.url }}" class="img-fluid mb-3" style="max-height: 250px;">
+      {% endif %}
+
+      <div class="row">
+        {% for img in package.gallery_images.all %}
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <img src="{{ img.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+              {% if img.caption %}
+                <div class="card-body">
+                  <p class="card-text">{{ img.caption }}</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <p class="text-muted">No gallery images available for this package.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <hr>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4">🧳 Book Your Package</h2>
+
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <form action="{% url 'package_success' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="package_id" value="{{ package.id }}">
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" name="contact" placeholder="Mobile number" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Number of Persons</label>
+            <input type="number" class="form-control" name="persons" min="1" value="1" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Start Date</label>
+            <input type="date" class="form-control" name="start_date" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-control" name="end_date" required>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Selected Package</label>
+          <input type="text" class="form-control" value="{{ package.name }} - ₹{{ package.price }}" readonly>
+        </div>
+
+        <!-- Razorpay Button -->
+        <script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          data-key="{{ razorpay_key }}"
+          data-amount="{{ amount }}"
+          data-currency="INR"
+          data-order_id="{{ order_id }}"
+          data-buttontext="Pay ₹{{ package.price }} & Book Now"
+          data-name="Tours & Travel"
+          data-description="Booking Payment"
+          data-image="{% static 'images/logo.png' %}"
+          data-theme.color="#198754"
+          data-callback_url="{% url 'package_success' %}">
+        </script>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

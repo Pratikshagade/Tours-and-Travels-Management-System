@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-5 text-center">
+  <div class="alert alert-success shadow">
+    <h2>✅ Payment Successful!</h2>
+    <p>Thank you for booking <strong>{{ package.name }}</strong>.</p>
+    <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+    <a href="{% url 'package_list' %}" class="btn btn-outline-primary mt-3">View More Packages</a>
+  </div>
+</div>
+
+<script>
+  window.onload = function () {
+    alert("🎉 Payment successful! Your booking is confirmed.");
+  };
+</script>
+{% endblock %}

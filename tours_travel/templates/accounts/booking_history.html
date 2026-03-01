@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container mt-5">
+  <h2 class="mb-4">📒 My Booking History</h2>
+
+  {% if bookings %}
+    <div class="row">
+      {% for booking in bookings %}
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            {% if booking.image %}
+              <img src="{{ booking.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ booking.name }}</h5>
+              <p class="card-text">
+                <strong>Destination:</strong> {{ booking.destination.name }}<br>
+                <strong>Dates:</strong> {{ booking.start_date }} to {{ booking.end_date }}<br>
+                <strong>Amount:</strong> ₹{{ booking.price }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No bookings yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

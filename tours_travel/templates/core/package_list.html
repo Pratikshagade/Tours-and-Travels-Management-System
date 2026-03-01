@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Available Packages</h2>
+  <div class="row">
+    {% for package in packages %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow h-100">
+          {% if package.image %}
+            <img src="{{ package.image.url }}" class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ package.name }}</h5>
+            <p class="card-text"><strong>Destination:</strong> {{ package.destination.name }}</p>
+            <p class="card-text"><strong>Price:</strong> ₹{{ package.price }}</p>
+            <a href="{% url 'package_detail' package.id %}" class="btn btn-primary">Show More Details</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

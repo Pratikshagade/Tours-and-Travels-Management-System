@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+
+    <p>{{request.user.username}}</p>
+    <p>{{request.user.email}}</p>
+    <p>{{request.user.phone}}</p>
+    <p>{{request.user.password}}</p>
+    
+{% endblock main %}
+
+
+    
